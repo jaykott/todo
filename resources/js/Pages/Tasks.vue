@@ -26,6 +26,16 @@ function formatDate(dateString) {
 	return date.toLocaleDateString();
 }
 
+function isOverdue(dateString, completed) {
+	if (!dateString || completed) return false;
+	const [year, month, day] = dateString.split('-');
+	const dueDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	dueDate.setHours(0, 0, 0, 0);
+	return dueDate < today;
+}
+
 async function loadTasks() {
     isLoading.value = true;
     errorMessage.value = '';
@@ -260,9 +270,11 @@ onMounted(loadTasks);
 						? 'lightblue' 
 						: dropTargetId === task.id 
 							? 'yellow' 
-							: task.completed 
-								? 'lightgreen' 
-								: 'white'
+							: isOverdue(task.due_date, task.completed)
+								? 'lightpink' 
+								: task.completed 
+									? 'lightgreen' 
+									: 'white'
 				}"
 			>
 				<div class="flex items-start gap-3 min-w-0">
