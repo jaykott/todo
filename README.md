@@ -27,7 +27,7 @@ A modern task management application built with Laravel and Vue.js (Inertia.js).
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/jaykott/todo.git
    cd task
    ```
 
